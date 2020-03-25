@@ -23,7 +23,7 @@ public class LoginPage {
 	By loginbtn=By.xpath("//*[@id=\"content\"]/div/div[2]/div/form/input");
 	public void url(String browser) //  launching the application using multiple browsers
 	{ 
-		try {
+		
 			if(browser.equalsIgnoreCase("chrome")) 
 			{
 				System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
@@ -34,11 +34,6 @@ public class LoginPage {
 			{
 				System.setProperty("webdriver.gecko.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
 				driver = new FirefoxDriver(); // to launch the application in firefox browser
-			}
-		}
-			catch(WebDriverException e) // this block is executed and message is printed when browser cannot be launched
-			{
-				System.out.println("browser not launching");
 			}
 		
 		driver.manage().window().maximize();  // maximizes the browser
