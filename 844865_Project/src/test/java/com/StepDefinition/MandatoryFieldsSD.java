@@ -10,7 +10,7 @@ public class MandatoryFieldsSD {
 	MandatoryFields Mandatory=new MandatoryFields();
 	@Given("^the application opens in chrome browser$")
 	public void the_application_opens_in_chrome_browser() throws Throwable {
-		Mandatory.url();
+		Mandatory.url("chrome");
 	}
 
 	@When("^the user clicks on register button$")

@@ -10,7 +10,7 @@ public class RegisterSD {
 	RegisterPage register = new RegisterPage();
 	@Given("^the Opencart application opens in chrome browser$")
 	public void the_Opencart_application_opens_in_chrome_browser() throws Throwable {
-	   register.url();
+	   register.url("chrome");
 	}
 
 	@When("^the user clicks on register$")

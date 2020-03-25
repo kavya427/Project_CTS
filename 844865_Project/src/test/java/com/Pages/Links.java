@@ -10,8 +10,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium. interactions.Actions;
 
 public class Links {
@@ -21,11 +23,27 @@ public class Links {
 	By Email=By.id("input-email");
 	By password=By.id("input-password");
 	By loginbtn=By.xpath("//*[@id=\"content\"]/div/div[2]/div/form/input");
-	public void url() //  launch the chrome
+	public void url(String browser) //  launching the application using multiple browsers
 	{ 
-		System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();// maximizes the browser
+		try {
+			if(browser.equalsIgnoreCase("chrome")) 
+			{
+				System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
+				driver = new ChromeDriver(); // to launch the application in chrome browser
+			}
+			else
+			if(browser.equalsIgnoreCase("firefox"))
+			{
+				System.setProperty("webdriver.gecko.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
+				driver = new FirefoxDriver(); // to launch the application in firefox browser
+			}
+		}
+			catch(WebDriverException e) // this block is executed and message is printed when browser cannot be launched
+			{
+				System.out.println("browser not launching");
+			}
+		
+		driver.manage().window().maximize();  // maximizes the browser
 		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS); // providing waiting time
 		
 	}
@@ -35,7 +53,7 @@ public class Links {
 		System.out.println(driver.getTitle()); //displays title of the page
 	}
 	public void Screenshot(String path) throws IOException{
-		TakesScreenshot ts =((TakesScreenshot)driver);
+		TakesScreenshot ts =((TakesScreenshot)driver); // takes screenshot of the page
 		File source = ts.getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(source,new File(path));
 	}
@@ -44,7 +62,7 @@ public class Links {
 		driver.findElement(Myaccount).click();
 		WebElement account =driver.findElement(Myaccount); 
 		WebElement loginto=driver.findElement(login);
-		Actions action = new Actions(driver);
+		Actions action = new Actions(driver); // actions class to perform mouse moments
 		action.moveToElement(account);
 		action.moveToElement(loginto).click().perform();
 		driver.findElement(loginbtn).click();
@@ -55,7 +73,7 @@ public class Links {
 		driver.findElement(password).sendKeys("kishore123");
 		driver.findElement(loginbtn).click();
 		Thread.sleep(1000); // waiting time
-		List<WebElement> links=driver.findElements(By.tagName("a")); //Links in that page
+		List<WebElement> links=driver.findElements(By.tagName("a")); //To get links in that page
 		System.out.println(links.size());
 		for(int i=1;i<links.size();i=i+1)
 		{

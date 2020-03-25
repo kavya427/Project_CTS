@@ -10,7 +10,7 @@ public class LoginSD {
 	LoginPage Login= new LoginPage();
 	@Given("^the application opens in browser$")
 	public void the_application_opens_in_browser() throws Throwable {
-		Login.url();
+		Login.url("chrome");
 	}
 
 	@When("^the user clicks on Login$")
@@ -25,7 +25,7 @@ public class LoginSD {
 		   Login.Login(i);
 		   if(i<3)
 		   {
-		   Login.url();
+		   Login.url("chrome");
 		   Login.HomePage();
 		   }
 		   }

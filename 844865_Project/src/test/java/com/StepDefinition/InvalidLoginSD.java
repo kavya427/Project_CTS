@@ -10,7 +10,7 @@ public class InvalidLoginSD {
 	InvalidLogin Invalid= new InvalidLogin();
 	@Given("^the application will open in chrome browser$")
 	public void the_application_will_open_in_chrome_browser() throws Throwable {
-		Invalid.url();
+		Invalid.url("chrome");
 	}  
 
 	@When("^the user clicks on login$")

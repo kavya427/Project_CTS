@@ -10,7 +10,7 @@ public class LinksSD {
 	Links Link=new Links();
 	@Given("^the application opens$")
 	public void the_application_opens() throws Throwable {
-		Link.url();
+		Link.url("chrome");
 	}
 
 	@When("^the user login to the application$")

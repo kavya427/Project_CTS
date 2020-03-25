@@ -5,8 +5,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 public class RegisterPage {
@@ -21,11 +23,27 @@ public class RegisterPage {
 	By cpwd=By.id("input-confirm");
 	By terms=By.xpath("//*[@id=\"content\"]/form/div/div/input[1]");
 	By cont=By.xpath("//*[@id=\"content\"]/form/div/div/input[2]");
-	public void url() //  launch the chrome
+	public void url(String browser) //  launching the application using multiple browsers
 	{ 
-		System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();// maximizes the browser
+		try {
+			if(browser.equalsIgnoreCase("chrome")) 
+			{
+				System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
+				driver = new ChromeDriver(); // to launch the application in chrome browser
+			}
+			else
+			if(browser.equalsIgnoreCase("firefox"))
+			{
+				System.setProperty("webdriver.gecko.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
+				driver = new FirefoxDriver(); // to launch the application in firefox browser
+			}
+		}
+			catch(WebDriverException e) // this block is executed and message is printed when browser cannot be launched
+			{
+				System.out.println("browser not launching");
+			}
+		
+		driver.manage().window().maximize();  // maximizes the browser
 		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS); // providing waiting time
 		
 	}
@@ -39,10 +57,10 @@ public class RegisterPage {
 		driver.findElement(Myaccount).click();
 		WebElement link =driver.findElement(Myaccount); // move to  element by creating object
 		WebElement link2=driver.findElement(Register); 
-		Actions action = new Actions(driver); // To perform Mouse over moments we need to use Actions class
+		Actions action = new Actions(driver); // To perform Mouse over moments we need to create object to Actions class
 		action.moveToElement(link);
 		action.moveToElement(link2).click().perform();
-		driver.findElement(FirstName).sendKeys("kavya"); // passing the vaild mail
+		driver.findElement(FirstName).sendKeys("kavya"); 
 		driver.findElement(LastName).sendKeys("dondeti");
 		driver.findElement(email).sendKeys("dondetikavya427@gmail.com");
 		driver.findElement(telephone).sendKeys("9876543210");
@@ -53,7 +71,7 @@ public class RegisterPage {
 	public void submitbutton() throws InterruptedException
 	{
 		driver.findElement(cont).click();
-		System.out.println("Successfully registered");
+		System.out.println("Successfully registered"); // after registering 
 		Thread.sleep(1000); // providing wait time
 		driver.close();// closing browser
 	}

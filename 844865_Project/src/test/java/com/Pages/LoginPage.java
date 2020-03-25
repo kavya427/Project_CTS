@@ -6,8 +6,10 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import ExcelUtility.ExcelPage;
@@ -19,11 +21,27 @@ public class LoginPage {
 	By Email=By.id("input-email");
 	By password=By.id("input-password");
 	By loginbtn=By.xpath("//*[@id=\"content\"]/div/div[2]/div/form/input");
-	public void url() //  launch the chrome
+	public void url(String browser) //  launching the application using multiple browsers
 	{ 
-		System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
-		driver = new ChromeDriver();
-		driver.manage().window().maximize(); // maximizes the browser
+		try {
+			if(browser.equalsIgnoreCase("chrome")) 
+			{
+				System.setProperty("webdriver.chrome.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
+				driver = new ChromeDriver(); // to launch the application in chrome browser
+			}
+			else
+			if(browser.equalsIgnoreCase("firefox"))
+			{
+				System.setProperty("webdriver.gecko.driver", "E:\\Eclipse\\844865_Project\\Driver\\chromedriver.exe\\");
+				driver = new FirefoxDriver(); // to launch the application in firefox browser
+			}
+		}
+			catch(WebDriverException e) // this block is executed and message is printed when browser cannot be launched
+			{
+				System.out.println("browser not launching");
+			}
+		
+		driver.manage().window().maximize();  // maximizes the browser
 		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS); // providing waiting time
 		
 	}
@@ -37,12 +55,12 @@ public class LoginPage {
 		driver.findElement(Myaccount).click();
 		WebElement link =driver.findElement(Myaccount); 
 		WebElement link2=driver.findElement(login);
-		Actions action = new Actions(driver);
+		Actions action = new Actions(driver); // Actions class to perform mouse actions
 		action.moveToElement(link);
 		action.moveToElement(link2).click().perform();
-		ExcelPage excel= new ExcelPage(); // creating object for excelpage
-		driver.findElement(Email).sendKeys(excel.excel_Email(a));
-		driver.findElement(password).sendKeys(excel.excel_password(a));
+		ExcelPage excel= new ExcelPage(); // creating object for excel page
+		driver.findElement(Email).sendKeys(excel.excel_Email(a)); // getting email data from the excel sheet
+		driver.findElement(password).sendKeys(excel.excel_password(a)); // getting passwords from the excel sheet
 		driver.findElement(loginbtn).click();
 		
 	}
